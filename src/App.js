@@ -4,7 +4,7 @@ import Header from './components/Header'
 import NewBlog from './views/New-blog'
 import BlogList from './views/Blog-list'
 import UserList from './views/User-list'
-import './App.css'
+import './assets/scss/index.scss'
 function App() {
   return (
     <BrowserRouter>

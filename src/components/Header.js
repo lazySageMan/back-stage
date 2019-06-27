@@ -1,10 +1,9 @@
 import React from 'react';
 import { Icon } from 'antd';
 import { NavLink, Link } from 'react-router-dom'
-import '../App.css';
 export default function(){
     return (
-        <header className="App-header">
+        <header className="header">
             <div className='header-botton'>
                 <div className='header-left'>
                     <Link to='/'>
