@@ -36,11 +36,10 @@ export default function(){
                 </div>
                 <div className='header-right'>
                     <div className='header-user'>
-                    <div className='header-user-circle'>
-                        <Icon style={{fontSize: '18px',color: '#fff'}} type='home' />
-                    </div>
-                    
-                    <div className='header-user-text'>admin</div>
+                        <div className='header-user-circle'>
+                            <Icon style={{fontSize: '18px',color: '#fff'}} type='home' />
+                        </div>
+                        <div className='header-user-text'>admin</div>
                     </div>
                 </div>
             </div>
