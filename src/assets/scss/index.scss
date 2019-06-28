@@ -12,12 +12,11 @@ code {
     font-family: source-code-pro, Menlo, Monaco, Consolas, "Courier New",
         monospace;
 }
-i {
-    display: flex;
-    align-items: center;
-}
 a {
     text-decoration-line: none;
+}
+p{
+    margin: 0;
 }
 .App {
     width: 100vw;
@@ -42,7 +41,11 @@ a {
 }
 
 // 引入
-@import './components/header.scss'
+//header 
+@import './components/header.scss';
+
+//header-content
+@import './components/content-header.scss';
 
 
 

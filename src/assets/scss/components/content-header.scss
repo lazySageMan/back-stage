@@ -1,0 +1,13 @@
+.content-header{
+    width: 100%;
+    height: 50px;
+    border-bottom: 1px solid #e8eaec;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 0 10px;
+    .left-text{
+        font-size: 16px;
+        color: #17233d;
+    }
+}
