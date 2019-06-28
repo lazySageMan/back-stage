@@ -4,7 +4,7 @@ export default function(){
     return (
         <div className='content'>
             <div className='content-main'>
-                <ContentHeader />
+                <ContentHeader title='用户列表' />
             </div>
         </div>
     )
