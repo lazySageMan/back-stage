@@ -1,7 +1,40 @@
 import React from 'react';
 import { Icon } from 'antd';
 import { NavLink, Link } from 'react-router-dom'
+import { useSelector, useDispatch } from 'react-redux'
 export default function(){
+
+    let header = useSelector(state => state.header)
+    let dispatch = useDispatch()
+
+    const tabChange = (index) => {
+        if(index === 0){
+            dispatch({
+                type: 'CHANGE_HEADER',
+                header: [
+                    {
+                        type: '/blog/add',
+                        title: '新建博客',
+                        bgColor: 'primary'
+                    }
+                ],
+                title: '博客管理'
+            })
+        }else{
+            dispatch({
+                type: 'CHANGE_HEADER',
+                header: [
+                    {
+                        type: '/user/add',
+                        title: '新增用户',
+                        bgColor: 'primary'
+                    }
+                ],
+                title: '用户管理'
+            })
+        }
+    }
+
     return (
         <header className="header">
             <div className='header-botton'>
@@ -14,19 +47,13 @@ export default function(){
                     
                     <div className='header-tab'>
                         <NavLink to='/' exact>
-                            <div className='header-tab-item'>
-                                <Icon style={{fontSize: '12px', color: '#fff'}} type='edit'/>
-                                <p className='header-tab-text'>新建博客</p>
-                            </div>
-                        </NavLink>
-                        <NavLink to='/bloglist' exact>
-                            <div className='header-tab-item'>
+                            <div className='header-tab-item' onClick={() => tabChange(0)}>
                                 <Icon style={{fontSize: '12px', color: '#fff'}} type='align-left'/>
                                 <p className='header-tab-text'>博客管理</p>
                             </div>
                         </NavLink>
                         <NavLink to='/usr' exact>
-                            <div className='header-tab-item'>
+                            <div className='header-tab-item' onClick={() => tabChange(1)}>
                                 <Icon style={{fontSize: '12px', color: '#fff'}} type='team'/>
                                 <p className='header-tab-text'>用户管理</p>
                             </div>

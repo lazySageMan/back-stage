@@ -7,6 +7,7 @@ body {
         sans-serif;
     -webkit-font-smoothing: antialiased;
     -moz-osx-font-smoothing: grayscale;
+    background: #f0f2f5;
 }
 code {
     font-family: source-code-pro, Menlo, Monaco, Consolas, "Courier New",
@@ -19,15 +20,11 @@ p{
     margin: 0;
 }
 .App {
-    width: 100vw;
-    height: 100vh;
-    background: #f0f2f5;
 }
 .active {
     background: #434e64;
 }
 .content {
-    width: 100vw;
     display: flex;
     justify-content: center;
     align-items: flex-start;
@@ -35,9 +32,16 @@ p{
 
 .content-main {
     width: 70vw;
-    height: 400px;
-    margin-top: 50px;
+    margin: 50px 0;
     background: #fff;
+}
+.content-text{
+    padding: 0 50px;
+}
+.content-page{
+    display: flex;
+    justify-content: flex-end;
+    padding: 10px 0;
 }
 
 // 引入
