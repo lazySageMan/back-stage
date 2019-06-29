@@ -5,6 +5,9 @@ export default function(){
         <div className='content'>
             <div className='content-main'>
                 <ContentHeader title='用户列表' />
+                <div className='content-usr'>
+                    <div className='content-usr-header'></div>
+                </div>
             </div>
         </div>
     )
