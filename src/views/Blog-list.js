@@ -1,8 +1,9 @@
 import React from 'react';
+import { withRouter } from "react-router-dom"
 import { Pagination, List, Avatar } from 'antd';
 import { useSelector } from 'react-redux'
 import ContentHeader from '../components/content-header'
-export default function(){
+const BlogList = (props) => {
     let bloglist = useSelector(state => state.bloglist)
     console.log(bloglist)
     return (
@@ -16,8 +17,9 @@ export default function(){
                         renderItem={item => (
                             <List.Item>
                                 <List.Item.Meta
+                                    onClick={() => props.history.push('/addblog')}
                                     avatar={<Avatar src="https://zos.alipayobjects.com/rmsportal/ODTLcjxAfvqbxHnVXCYX.png" />}
-                                    title={<a href="https://ant.design">{item.title}</a>}
+                                    title={<p href="https://ant.design">{item.title}</p>}
                                     description="Ant Design, a design language for background applications, is refined by Ant UED Team"
                                 />
                             </List.Item>
@@ -31,3 +33,5 @@ export default function(){
         </div>
     )
 }
+
+export default withRouter(BlogList);
