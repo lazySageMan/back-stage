@@ -51,6 +51,13 @@ p{
     height: 50px;
 }
 
+.addBlog{
+    width: 70vw;
+    height: 60vh;
+    margin-top: 50px ;
+
+}
+
 // 引入
 //header 
 @import './components/header.scss';

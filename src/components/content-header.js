@@ -1,10 +1,18 @@
-import React from 'react';
-import { Button } from 'antd';
+import React from 'react'
+import { withRouter } from "react-router-dom"
+import { Button } from 'antd'
 import { useSelector } from 'react-redux'
-export default function(){
+const ContentHeader = (props) => {
     let header = useSelector(state => state.header)
     // let dispatch = useDispatch()
     console.log(header, '11111111111')
+
+    const handClick = (data) => {
+        console.log(data)
+        if (data.title === '新建博客'){
+            props.history.push('/addblog')
+        }
+    }
 
     return (
         <div className='content-header'>
@@ -20,7 +28,7 @@ export default function(){
                             <Button 
                                 key={index}
                                 type={item.bgColor} 
-                                onClick={ () => console.log('12221') } 
+                                onClick={() => handClick(item)} 
                                 style={{minWidth:'80px', marginLeft: '5px'}}>{item.title}</Button>
                         )
                     })
@@ -30,3 +38,5 @@ export default function(){
         </div>
     )
 }
+
+export default withRouter(ContentHeader);

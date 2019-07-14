@@ -5,6 +5,7 @@ import Store from './stores/index'
 import Header from './components/Header'
 import BlogList from './views/Blog-list'
 import UserList from './views/User-list'
+import AddBlog from './views/Add-blog'
 import 'antd/dist/antd.css';
 import './assets/scss/index.scss'
 
@@ -17,6 +18,7 @@ function App() {
           <Switch>
             <Route path='/' component={BlogList} exact />
             <Route path='/usr' component={UserList} />
+            <Route path='/addblog' component={AddBlog} />
           </Switch>
         </div>
       </BrowserRouter>
