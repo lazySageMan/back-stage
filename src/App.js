@@ -6,6 +6,7 @@ import Header from './components/Header'
 import BlogList from './views/Blog-list'
 import UserList from './views/User-list'
 import AddBlog from './views/Add-blog'
+import Modal from './components/Modal'
 import 'antd/dist/antd.css';
 import './assets/scss/index.scss'
 
@@ -15,6 +16,7 @@ function App() {
       <BrowserRouter>
         <div className="App">
           <Header />
+          <Modal />
           <Switch>
             <Route path='/' component={BlogList} exact />
             <Route path='/usr' component={UserList} />

@@ -58,6 +58,14 @@ p{
 
 }
 
+.flex-wrap{
+    display: flex;
+    flex-direction: row;
+    justify-content: flex-start;
+    align-items: center;
+    margin-top: 10px;
+}
+
 // 引入
 //header 
 @import './components/header.scss';
