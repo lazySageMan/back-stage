@@ -14,6 +14,13 @@ export default function () {
 
     const handleSave = (value) => {
         console.log(value, '文件MARKDOWN上传');
+
+        dispatch({
+            type: 'MODAL_CHANGE',
+            isShow: true,
+            modalType: 'addBlog',
+            title: '保存博客到服务器'
+        })
     }
 
     return(

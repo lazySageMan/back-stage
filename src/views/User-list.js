@@ -1,8 +1,9 @@
 import React from 'react';
 import ContentHeader from '../components/content-header'
 import { Table, Tag, Button } from 'antd';
+import { useDispatch } from 'react-redux'
 export default function(){
-
+    let dispatch = useDispatch();
     const data = [
         {
             key: '1',
@@ -89,12 +90,35 @@ export default function(){
             key: 'action',
             render: (text, record) => (
                 <span>
-                    <Button style={{marginRight: '5px'}} type="primary">修改信息</Button>
-                    <Button type="danger">删除用户</Button>
+                    <Button 
+                        onClick={() => changeInfo()}
+                        style={{marginRight: '5px'}} 
+                        type="primary">修改信息</Button>
+                    <Button 
+                        onClick={() => deleteUsr()}
+                        type="danger">删除用户</Button>
                 </span>
             ),
         },
     ];
+
+    const changeInfo = () => {
+        dispatch({
+            type: 'MODAL_CHANGE',
+            isShow: true,
+            modalType: 'addUser',
+            title: '修改信息'
+        })
+    }
+
+    const deleteUsr = () => {
+        dispatch({
+            type: 'MODAL_CHANGE',
+            isShow: true,
+            modalType: 'deleteUser',
+            title: '删除用户'
+        })
+    }
 
     return (
         <div className='content'>
