@@ -1,6 +1,12 @@
 import React from 'react';
+import { withRouter } from "react-router-dom"
+const Login =  (props) => {
 
-export default function(){
+
+    const userLogin = () => {
+        props.history.push('/')
+    }
+
     return (
         <div className='login-wrap'>
             <h2 className='project-name'>博客后台管理系统</h2>
@@ -24,9 +30,14 @@ export default function(){
                     <span className='login-forget-text'>忘记密码</span>
                 </div>
                 <div className='login-submit'>
-                    <button className='botton' type='button'>登录</button>
+                    <button 
+                        onClick={() => userLogin()}
+                        className='botton' 
+                        type='button'>登录</button>
                 </div>
             </div>
         </div>
     )
 }
+
+export default withRouter(Login);

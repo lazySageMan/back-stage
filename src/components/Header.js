@@ -1,5 +1,5 @@
 import React from 'react';
-import { Icon } from 'antd';
+import { Icon, Dropdown, Menu } from 'antd';
 import { NavLink, Link, withRouter } from 'react-router-dom'
 import { useSelector, useDispatch } from 'react-redux'
 const Header =  (props) => {
@@ -34,6 +34,21 @@ const Header =  (props) => {
             })
         }
     }
+
+    const goLogin = () => {
+        props.history.push('/login')
+    }
+
+    const menu = (
+        <Menu>
+            <Menu.Item>
+                <span>查看个人信息</span>
+            </Menu.Item>
+            <Menu.Item onClick={() => goLogin()}>
+                <span>退出</span>
+            </Menu.Item>
+        </Menu>
+    );
 
     let returnTag = () => {
         if (pathName === '/login'){
@@ -70,14 +85,19 @@ const Header =  (props) => {
                                 </NavLink>
                             </div>
                         </div>
-                        <div className='header-right'>
-                            <div className='header-user'>
-                                <div className='header-user-circle'>
-                                    <Icon style={{ fontSize: '18px', color: '#fff' }} type='home' />
+                        <Dropdown 
+                            overlay={menu} 
+                            placement="bottomCenter" 
+                            >
+                            <div className='header-right'>
+                                <div className='header-user'>
+                                    <div className='header-user-circle'>
+                                        <Icon style={{ fontSize: '18px', color: '#fff' }} type='home' />
+                                    </div>
+                                    <div className='header-user-text'>admin</div>
                                 </div>
-                                <div className='header-user-text'>admin</div>
                             </div>
-                        </div>
+                        </Dropdown>
                     </div>
                 </header>
             )
