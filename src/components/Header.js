@@ -1,9 +1,9 @@
 import React from 'react';
 import { Icon } from 'antd';
-import { NavLink, Link } from 'react-router-dom'
+import { NavLink, Link, withRouter } from 'react-router-dom'
 import { useSelector, useDispatch } from 'react-redux'
-export default function(){
-
+const Header =  (props) => {
+    let pathName = props.location.pathname;
     let header = useSelector(state => state.header)
     let dispatch = useDispatch()
 
@@ -35,40 +35,56 @@ export default function(){
         }
     }
 
-    return (
-        <header className="header">
-            <div className='header-botton'>
-                <div className='header-left'>
-                    <Link to='/'>
-                        <div className='header-icon'>
-                            Document
+    let returnTag = () => {
+        if (pathName === '/login'){
+            return <div></div>
+        }else{
+            return (
+                <header className="header">
+                    <div className='header-botton'>
+                        <div className='header-left'>
+                            <Link to='/'>
+                                <div className='header-icon'>
+                                    Document
                         </div>
-                    </Link>
-                    
-                    <div className='header-tab'>
-                        <NavLink to='/' exact>
-                            <div className='header-tab-item' onClick={() => tabChange(0)}>
-                                <Icon style={{fontSize: '12px', color: '#fff'}} type='align-left'/>
-                                <p className='header-tab-text'>博客管理</p>
+                            </Link>
+
+                            <div className='header-tab'>
+                                <NavLink to='/' exact>
+                                    <div className='header-tab-item' onClick={() => tabChange(0)}>
+                                        <Icon style={{ fontSize: '12px', color: '#fff' }} type='align-left' />
+                                        <p className='header-tab-text'>博客管理</p>
+                                    </div>
+                                </NavLink>
+                                <NavLink to='/usr' exact>
+                                    <div className='header-tab-item' onClick={() => tabChange(1)}>
+                                        <Icon style={{ fontSize: '12px', color: '#fff' }} type='team' />
+                                        <p className='header-tab-text'>用户管理</p>
+                                    </div>
+                                </NavLink>
+                                <NavLink to='/addblog' exact>
+                                    <div className='header-tab-item' onClick={() => tabChange(1)}>
+                                        <Icon style={{ fontSize: '12px', color: '#fff' }} type='edit' />
+                                        <p className='header-tab-text'>新增博客</p>
+                                    </div>
+                                </NavLink>
                             </div>
-                        </NavLink>
-                        <NavLink to='/usr' exact>
-                            <div className='header-tab-item' onClick={() => tabChange(1)}>
-                                <Icon style={{fontSize: '12px', color: '#fff'}} type='team'/>
-                                <p className='header-tab-text'>用户管理</p>
-                            </div>
-                        </NavLink>
-                    </div>
-                </div>
-                <div className='header-right'>
-                    <div className='header-user'>
-                        <div className='header-user-circle'>
-                            <Icon style={{fontSize: '18px',color: '#fff'}} type='home' />
                         </div>
-                        <div className='header-user-text'>admin</div>
+                        <div className='header-right'>
+                            <div className='header-user'>
+                                <div className='header-user-circle'>
+                                    <Icon style={{ fontSize: '18px', color: '#fff' }} type='home' />
+                                </div>
+                                <div className='header-user-text'>admin</div>
+                            </div>
+                        </div>
                     </div>
-                </div>
-            </div>
-        </header>
-    )
+                </header>
+            )
+        }
+    }
+
+    return returnTag()
 }
+
+export default withRouter(Header);
