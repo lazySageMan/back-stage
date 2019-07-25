@@ -1,8 +1,9 @@
 import React from 'react'
 import { useSelector, useDispatch } from 'react-redux'
 import { Modal, Input, Icon } from 'antd'
-export default () => {
+import HTTP from '../utils/HTTP'
 
+export default () => {
     let modal = useSelector(state => state.modal)
     let dispatch = useDispatch()
     console.log(modal)
