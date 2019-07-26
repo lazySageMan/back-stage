@@ -1,53 +1,30 @@
-import React from 'react';
+import React, { useEffect } from 'react';
 import ContentHeader from '../components/content-header'
 import { Table, Tag, Button } from 'antd';
-import { useDispatch } from 'react-redux'
+import { useDispatch, useSelector } from 'react-redux'
+import HTTP from '../utils/HTTP'
 export default function(){
     let dispatch = useDispatch();
-    const data = [
-        {
-            key: '1',
-            Account: 'admin',
-            Passwd: '123456',
-            Email: 'lazysage@126.com',
-            Permission: ['root'],
-        },
-        {
-            key: '2',
-            Account: 'test1',
-            Passwd: '123456',
-            Email: 'lazysage@126.com',
-            Permission: ['developer'],
-        },
-        {
-            key: '3',
-            Account: 'test2',
-            Passwd: '123456',
-            Email: 'lazysage@126.com',
-            Permission: ['developer'],
-        },
-        {
-            key: '4',
-            Account: 'admin',
-            Passwd: '123456',
-            Email: 'lazysage@126.com',
-            Permission: ['root'],
-        },
-        {
-            key: '5',
-            Account: 'test1',
-            Passwd: '123456',
-            Email: 'lazysage@126.com',
-            Permission: ['developer'],
-        },
-        {
-            key: '6',
-            Account: 'test2',
-            Passwd: '123456',
-            Email: 'lazysage@126.com',
-            Permission: ['developer'],
+    let user = useSelector(state => state.user)
+    useEffect(() => {
+        HTTP.GET('/admin/getUser').then((res) => {
+            if(res.code === 200){
+                dispatch({
+                    type: 'USER_ADD',
+                    user: res.data.data
+                })
+            }
+        })
+    }, [dispatch])
+    let data = user.user.map(item => {
+        return {
+            key: item.user_id,
+            Account: item.user_name,
+            Passwd: item.user_passwd,
+            Email: item.user_mail,
+            Permission: [item.user_permission === '1' ? 'ROOT' : 'DEVELOP']
         }
-    ];
+    })
 
     const columns = [
         {

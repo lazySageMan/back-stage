@@ -6,6 +6,7 @@ import header from './modules/header'
 import bloglist from './modules/bloglist'
 import addblog from './modules/addblog'
 import modal from './modules/modal'
+import user from './modules/user'
 
 const middlewares = [
     thunk,
@@ -16,7 +17,8 @@ const reducer = combineReducers({
     header: header,
     bloglist: bloglist,
     addblog: addblog,
-    modal: modal
+    modal: modal,
+    user: user
 });
 
 export default createStore(reducer, applyMiddleware(...middlewares));
