@@ -11,23 +11,24 @@ import UserLogin from './views/User-login'
 import 'antd/dist/antd.css';
 import './assets/scss/index.scss'
 
-function App() {
-  return (
-    <Provider store={Store}>
-      <BrowserRouter>
-        <div className="App">
-          <Header />
-          <Modal />
-          <Switch>
-            <Route path='/' component={BlogList} exact />
-            <Route path='/usr' component={UserList} />
-            <Route path='/addblog' component={AddBlog} />
-            <Route path='/login' component={UserLogin} />
-          </Switch>
-        </div>
-      </BrowserRouter>
-    </Provider>
-  )
+function App(props) {
+
+	return (
+		<Provider store={Store}>
+			<BrowserRouter>
+				<div className="App">
+					<Header />
+					<Modal />
+					<Switch>
+						<Route path='/' component={BlogList} exact />
+						<Route path='/usr' component={UserList} />
+						<Route path='/addblog' component={AddBlog} />
+						<Route path='/login' component={UserLogin} />
+					</Switch>
+				</div>
+			</BrowserRouter>
+		</Provider>
+	)
 }
 
 export default App;

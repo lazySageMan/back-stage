@@ -1,10 +1,40 @@
-import React from 'react';
+import React, { useState } from 'react';
+import HTTP from '../utils/HTTP'
+import LocalStotrage from '../utils/LocalStotrage'
 import { withRouter } from "react-router-dom"
+import { message } from 'antd';
 const Login =  (props) => {
 
+    const [account, setAccount] = useState('');
+    const [passwd, setPasswd] = useState('');
+    const token = LocalStotrage.getItem('token');
+
+    if(token){
+        props.history.push('/')
+    }
 
     const userLogin = () => {
-        props.history.push('/')
+
+        if (account === '' || passwd === ''){
+            message.error('账号密码不能为空');
+            return
+        }
+
+        let obj = {
+            account: account,
+            passwd: passwd
+        }
+        HTTP.POST('/admin/login', obj).then(res => {
+            console.log(res)
+            if(res.code === 200){
+                message.success(res.message);
+                LocalStotrage.setItem('token', res.data)
+                props.history.push('/')
+            }else{
+                message.error(res.message);
+                return
+            }
+        })
     }
 
     return (
@@ -14,6 +44,8 @@ const Login =  (props) => {
                 <div className='login-title'>登录</div>
                 <div className='login-input'>
                     <input 
+                        value={account}
+                        onChange={e => setAccount(e.target.value )}
                         className='input'
                         type='text' 
                         placeholder='请输入用户名' />
@@ -21,8 +53,10 @@ const Login =  (props) => {
                 <div className='login-error'></div>
                 <div className='login-input'>
                     <input
+                        value={passwd}
+                        onChange={e => setPasswd(e.target.value )}
                         className='input'
-                        type='text'
+                        type='password'
                         placeholder='请输入密码' />
                 </div>
                 <div className='login-error'></div>

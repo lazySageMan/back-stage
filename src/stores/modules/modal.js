@@ -2,7 +2,9 @@
 const defaultState = {
     isShow: false,
     modalType: 'addUser',
-    title: '新增用户'
+    title: '新增用户',
+    id: null,
+    userInfo: {}
 };
 
 export default (state = defaultState, action) => {
@@ -11,7 +13,9 @@ export default (state = defaultState, action) => {
             return Object.assign({}, state, {
                 isShow: action.isShow,
                 modalType: action.modalType,
-                title: action.title
+                title: action.title,
+                id: action.id ? action.id : null,
+                userInfo: action.userInfo ? action.userInfo : {}
             });
         default:
             return state;

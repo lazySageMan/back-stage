@@ -3,26 +3,33 @@ import ContentHeader from '../components/content-header'
 import { Table, Tag, Button } from 'antd';
 import { useDispatch, useSelector } from 'react-redux'
 import HTTP from '../utils/HTTP'
+import LocalStotrage from '../utils/LocalStotrage'
+const token = LocalStotrage.getItem('token')
 export default function(){
-    let dispatch = useDispatch();
-    let user = useSelector(state => state.user)
+    
+    const dispatch = useDispatch();
+    const user = useSelector(state => state.user)
+
+    
     useEffect(() => {
-        HTTP.GET('/admin/getUser').then((res) => {
+        HTTP.GET('/admin/getUser', '', token).then((res) => {
+            console.log(res)
             if(res.code === 200){
                 dispatch({
-                    type: 'USER_ADD',
-                    user: res.data.data
+                    type: 'GET_USR',
+                    user: res.data
                 })
             }
         })
     }, [dispatch])
+
     let data = user.user.map(item => {
         return {
-            key: item.user_id,
-            Account: item.user_name,
-            Passwd: item.user_passwd,
-            Email: item.user_mail,
-            Permission: [item.user_permission === '1' ? 'ROOT' : 'DEVELOP']
+            key: item.id,
+            Account: item.username,
+            Passwd: item.password,
+            Email: item.email,
+            Permission: [item.auth === 1 ? 'ROOT' : 'DEVELOP']
         }
     })
 
@@ -65,35 +72,39 @@ export default function(){
         {
             title: '操作',
             key: 'action',
-            render: (text, record) => (
-                <span>
-                    <Button 
-                        onClick={() => changeInfo()}
-                        style={{marginRight: '5px'}} 
-                        type="primary">修改信息</Button>
-                    <Button 
-                        onClick={() => deleteUsr()}
-                        type="danger">删除用户</Button>
-                </span>
-            ),
+            render: (text) => {
+                return (
+                    <span>
+                        <Button
+                            onClick={() => changeInfo(text)}
+                            style={{ marginRight: '5px' }}
+                            type="primary">修改信息</Button>
+                        <Button
+                            onClick={() => deleteUsr(text.key)}
+                            type="danger">删除用户</Button>
+                    </span>
+                )
+            }
         },
     ];
 
-    const changeInfo = () => {
+    const changeInfo = (info) => {
         dispatch({
             type: 'MODAL_CHANGE',
             isShow: true,
-            modalType: 'addUser',
-            title: '修改信息'
+            modalType: 'changeUser',
+            title: '修改信息',
+            userInfo: info
         })
     }
 
-    const deleteUsr = () => {
+    const deleteUsr = (key) => {
         dispatch({
             type: 'MODAL_CHANGE',
             isShow: true,
             modalType: 'deleteUser',
-            title: '删除用户'
+            title: '删除用户',
+            id: key
         })
     }
 

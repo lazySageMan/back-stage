@@ -2,6 +2,7 @@ import React from 'react';
 import { Icon, Dropdown, Menu } from 'antd';
 import { NavLink, Link, withRouter } from 'react-router-dom'
 import { useSelector, useDispatch } from 'react-redux'
+import LocalStotrage from '../utils/LocalStotrage'
 const Header =  (props) => {
     let pathName = props.location.pathname;
     let header = useSelector(state => state.header)
@@ -36,6 +37,7 @@ const Header =  (props) => {
     }
 
     const goLogin = () => {
+        LocalStotrage.delItem('token')
         props.history.push('/login')
     }
 
