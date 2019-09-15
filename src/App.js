@@ -12,7 +12,6 @@ import 'antd/dist/antd.css';
 import './assets/scss/index.scss'
 
 function App(props) {
-
 	return (
 		<Provider store={Store}>
 			<BrowserRouter>
