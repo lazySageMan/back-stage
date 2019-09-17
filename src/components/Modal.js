@@ -186,15 +186,11 @@ export default () => {
                     </p>
                     <p className="flex-wrap">
                         <span style={{ flex: 1, textAlign: 'center' }}>图片：</span>
-                        <Input style={{ flex: 9 }} placeholder="博客图片" />
+                        <Input style={{ flex: 9 }} placeholder="url地址" />
                     </p>
                     <p className="flex-wrap">
-                        <span style={{ flex: 1, textAlign: 'center' }}>简介：</span>
-                        <Input style={{ flex: 9 }} placeholder="博客简介" />
-                    </p>
-                    <p className="flex-wrap">
-                        <span style={{ flex: 1, textAlign: 'center' }}>作者：</span>
-                        <Input style={{ flex: 9 }} placeholder="博客作者" />
+                        <span style={{ flex: 1, textAlign: 'center' }}>标签：</span>
+                        <Input style={{ flex: 9 }} placeholder="多个标签用,间隔" />
                     </p>
                 </div>
             )

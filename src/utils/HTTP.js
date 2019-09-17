@@ -1,5 +1,4 @@
 import Axios from 'axios'
-
 export default class HTTP {
   constructor() {
     this.host = 'http://localhost:9000' // 请求主机
@@ -50,9 +49,11 @@ export default class HTTP {
 				message: res.data.message
 			}
 		}).catch(err => {
-			return {
-				code: 401,
-				message: '请求失败！'
+			if (err.response.status === 401){
+				return {
+					code: 401,
+					message: '身份已过期，请重新登录'
+				}
 			}
 		})
 	}
@@ -74,10 +75,11 @@ export default class HTTP {
 				message: res.data.message
 			}
 		}).catch(err => {
-			// window.ExpiredToken()
-			return {
-				code: 401,
-				message: '请求失败！'
+			if (err.response.status === 401) {
+				return {
+					code: 401,
+					message: '身份已过期，请重新登录'
+				}
 			}
 		})
 	}

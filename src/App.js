@@ -8,7 +8,7 @@ import UserList from './views/User-list'
 import AddBlog from './views/Add-blog'
 import Modal from './components/Modal'
 import UserLogin from './views/User-login'
-import 'antd/dist/antd.css';
+import 'antd/dist/antd.css'
 import './assets/scss/index.scss'
 
 function App(props) {

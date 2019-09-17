@@ -79,12 +79,12 @@ const Header =  (props) => {
                                         <p className='header-tab-text'>用户管理</p>
                                     </div>
                                 </NavLink>
-                                <NavLink to='/addblog' exact>
+                                {/* <NavLink to='/addblog' exact>
                                     <div className='header-tab-item' onClick={() => tabChange(1)}>
                                         <Icon style={{ fontSize: '12px', color: '#fff' }} type='edit' />
                                         <p className='header-tab-text'>新增博客</p>
                                     </div>
-                                </NavLink>
+                                </NavLink> */}
                             </div>
                         </div>
                         <Dropdown 

@@ -1,8 +1,8 @@
-import React, { useState } from 'react';
+import React, { useState } from 'react'
 import HTTP from '../utils/HTTP'
 import LocalStotrage from '../utils/LocalStotrage'
 import { withRouter } from "react-router-dom"
-import { message } from 'antd';
+import { message } from 'antd'
 const Login =  (props) => {
 
     const [account, setAccount] = useState('');

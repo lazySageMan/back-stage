@@ -1,27 +1,32 @@
-import React, { useEffect } from 'react';
+import React, { useEffect } from 'react'
 import ContentHeader from '../components/content-header'
-import { Table, Tag, Button } from 'antd';
+import { Table, Tag, Button } from 'antd'
+import { withRouter } from 'react-router-dom'
 import { useDispatch, useSelector } from 'react-redux'
 import HTTP from '../utils/HTTP'
+import { message } from 'antd'
 import LocalStotrage from '../utils/LocalStotrage'
-const token = LocalStotrage.getItem('token')
-export default function(){
-    
-    const dispatch = useDispatch();
-    const user = useSelector(state => state.user)
 
+const UserList = (props) => {
+    const dispatch = useDispatch()
+    const user = useSelector(state => state.user)
     
     useEffect(() => {
+        const token = LocalStotrage.getItem('token')
+
         HTTP.GET('/admin/getUser', '', token).then((res) => {
-            console.log(res)
             if(res.code === 200){
                 dispatch({
                     type: 'GET_USR',
                     user: res.data
                 })
+            }else if(res.code === 401){
+                LocalStotrage.delAll()
+                message.error('身份已过期，请重新登录')
+                props.history.push('/login')
             }
         })
-    }, [dispatch])
+    }, [dispatch, props.history])
 
     let data = user.user.map(item => {
         return {
@@ -119,3 +124,5 @@ export default function(){
         </div>
     )
 }
+
+export default withRouter(UserList)
