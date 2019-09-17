@@ -1,6 +1,6 @@
 import React from 'react';
 import { withRouter } from "react-router-dom"
-import { Pagination, List, Avatar } from 'antd';
+import { Pagination, List } from 'antd';
 import { useSelector } from 'react-redux'
 import ContentHeader from '../components/content-header'
 const BlogList = (props) => {
@@ -18,15 +18,14 @@ const BlogList = (props) => {
                             <List.Item>
                                 <List.Item.Meta
                                     onClick={() => props.history.push('/addblog')}
-                                    avatar={<Avatar src="https://zos.alipayobjects.com/rmsportal/ODTLcjxAfvqbxHnVXCYX.png" />}
-                                    title={<p href="https://ant.design">{item.title}</p>}
+                                    title={<p>{item.title}</p>}
                                     description="Ant Design, a design language for background applications, is refined by Ant UED Team"
                                 />
                             </List.Item>
                         )}
                     />
                     <div className='content-page'>
-                        <Pagination defaultCurrent={1} total={50} />
+                        <Pagination defaultCurrent={1} total={bloglist.blog.length} />
                     </div>
                 </div>
             </div>

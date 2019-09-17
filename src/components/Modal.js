@@ -139,8 +139,7 @@ export default () => {
                         <span style={{flex: 1, textAlign: 'center'}}>账号：</span>
                         <Input 
                             onChange={(e) => setAccount(e.target.value)}
-                            // value={account} 
-                            value={userInfo.Account}
+                            value={account} 
                             style={{flex: 9}} 
                             placeholder="请输入账号"/>
                     </p>
@@ -191,6 +190,10 @@ export default () => {
                     <p className="flex-wrap">
                         <span style={{ flex: 1, textAlign: 'center' }}>标签：</span>
                         <Input style={{ flex: 9 }} placeholder="多个标签用,间隔" />
+                    </p>
+                    <p className="flex-wrap">
+                        <span style={{ flex: 1, textAlign: 'center' }}>类别：</span>
+                        <Input style={{ flex: 9 }} placeholder="多个类别用,间隔" />
                     </p>
                 </div>
             )

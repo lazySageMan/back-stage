@@ -41,6 +41,14 @@ const Header =  (props) => {
         props.history.push('/login')
     }
 
+    const isShowTab = () => {
+        if (pathName === '/usr'){
+            return false
+        }
+
+        return true
+    }
+
     const menu = (
         <Menu>
             <Menu.Item>
@@ -63,11 +71,11 @@ const Header =  (props) => {
                             <Link to='/'>
                                 <div className='header-icon'>
                                     Document
-                        </div>
+                                </div>
                             </Link>
 
                             <div className='header-tab'>
-                                <NavLink to='/' exact>
+                                <NavLink isActive={() => isShowTab()} to='/'>
                                     <div className='header-tab-item' onClick={() => tabChange(0)}>
                                         <Icon style={{ fontSize: '12px', color: '#fff' }} type='align-left' />
                                         <p className='header-tab-text'>博客管理</p>

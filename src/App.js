@@ -20,9 +20,9 @@ function App(props) {
 					<Modal />
 					<Switch>
 						<Route path='/' component={BlogList} exact />
-						<Route path='/usr' component={UserList} />
-						<Route path='/addblog' component={AddBlog} />
-						<Route path='/login' component={UserLogin} />
+						<Route path='/usr' component={UserList} exact />
+						<Route path='/addblog' component={AddBlog} exact />
+						<Route path='/login' component={UserLogin} exact />
 					</Switch>
 				</div>
 			</BrowserRouter>
