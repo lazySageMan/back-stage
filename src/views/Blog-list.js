@@ -1,11 +1,12 @@
 import React, { useEffect } from 'react';
 import { withRouter } from "react-router-dom"
-import { Pagination, List } from 'antd';
+import { Pagination, Divider } from 'antd';
 import { useSelector, useDispatch } from 'react-redux'
 import ContentHeader from '../components/content-header'
 import HTTP from '../utils/HTTP'
 import { message } from 'antd'
 import LocalStotrage from '../utils/LocalStotrage'
+import { translateMarkdown } from '../utils/translateMarkdown'
 const BlogList = (props) => {
     const bloglist = useSelector(state => state.bloglist)
     const dispatch = useDispatch()
@@ -15,9 +16,14 @@ const BlogList = (props) => {
         HTTP.GET('/admin/getBlog', '', token).then(res => {
             console.log(res)
             if(res.code === 200){
+                let result = res.data;
+                result.forEach(v => {
+                    let index = v.content.indexOf('<!--more-->')
+                    v.description = translateMarkdown(v.content.slice(0, index))
+                })
                 dispatch({
                     type: 'GET_BLOG',
-                    blogList: res.data
+                    blogList: result
                 })
             } else if(res.code === 401){
                 LocalStotrage.delAll()
@@ -43,24 +49,40 @@ const BlogList = (props) => {
 
     return (
         <div className='content'>
-            <div className='content-main'>
+            <div 
+                className='content-main'
+                // style={{ maxHeight: `${document.body.clientHeight - (50 * 2 + 60) + 'px'}` }}
+                >
                 <ContentHeader />
                 <div className='content-text'>
-                    <List
-                        itemLayout="horizontal"
-                        dataSource={bloglist.blog}
-                        renderItem={item => (
-                            <List.Item>
-                                <List.Item.Meta
-                                    onClick={() => selectBlog(item)}
-                                    title={<p>{item.title}</p>}
-                                    description={<img alt='' style={{width: '100%', height: '100px'}} src={item.img} />}
-                                />
-                            </List.Item>
-                        )}
-                    />
+                    <div className="ul-list">
+                        {
+                            bloglist.blog.map((v, i) => {
+                                return (
+                                    <li 
+                                        key={i} 
+                                        className="ul-list-item"
+                                        onClick={() => selectBlog(v)}>
+                                        <Divider orientation="left">
+                                            <span className="title">
+                                                {v.title}
+                                            </span>
+                                            <span className="create-time">{v.createdAt.slice(0, 10)}</span>
+                                        </Divider>
+                                        <div 
+                                            className="article-detail description"
+                                            dangerouslySetInnerHTML={{ __html: v.description }} />
+                                    </li>
+                                )
+                            })
+                        }
+                    </div>
                     <div className='content-page'>
-                        <Pagination defaultCurrent={1} total={bloglist.blog.length} />
+                        <Pagination 
+                            pageSize={2}
+                            defaultCurrent={1} 
+                            pageSizeOptions={2}
+                            total={bloglist.blog.length} />
                     </div>
                 </div>
             </div>

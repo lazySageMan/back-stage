@@ -115,7 +115,9 @@ const UserList = (props) => {
 
     return (
         <div className='content'>
-            <div className='content-main'>
+            <div 
+                className='content-main' 
+                style={{maxHeight: `${document.body.clientHeight - (50*2 + 60) + 'px'}`}}>
                 <ContentHeader title='用户列表' />
                 <div className='content-usr'>
                     <Table columns={columns} dataSource={data} />

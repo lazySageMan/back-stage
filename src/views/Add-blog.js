@@ -42,6 +42,8 @@ const AddBlog = function (props) {
         <div className='content'>
             <div className='addBlog'>
                 <Editor 
+                    height={document.body.clientHeight - (50*2 + 60) + 'px'}
+                    className='article-detail'
                     onSave={(value) => handleSave(value)}
                     onChange={(value) => handleChange(value)}
                     value={value.value} 
