@@ -5,12 +5,21 @@ import { useSelector, useDispatch } from 'react-redux'
 const ContentHeader = (props) => {
     let header = useSelector(state => state.header)
     let dispatch = useDispatch()
-    console.log(header, '11111111111')
 
-    const handClick = (data) => {
+    const handClick = async (data) => {
         console.log(data)
         if (data.title === '新建博客'){
-            props.history.push('/addblog')
+            await dispatch({
+                type: 'BLOG_CHANGE',
+                value: '',
+                blodTitle: '',
+                blogImg: '',
+                blogTag: '',
+                blogCategory: '',
+                blogId: ''
+            })
+
+            props.history.push('/addblog', {id: 'new'})
         } else if(data.title === '新增用户'){
             dispatch({
                 type: 'MODAL_CHANGE',

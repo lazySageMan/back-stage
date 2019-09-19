@@ -23,7 +23,7 @@ const UserList = (props) => {
             }else if(res.code === 401){
                 LocalStotrage.delAll()
                 message.error('身份已过期，请重新登录')
-                props.history.push('/login')
+                props.history.replace('/login')
             }
         })
     }, [dispatch, props.history])

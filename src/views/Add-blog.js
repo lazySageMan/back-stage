@@ -1,9 +1,14 @@
 import React from 'react';
+import { withRouter } from "react-router-dom"
 import { useSelector, useDispatch } from 'react-redux'
 import Editor from 'for-editor'
-export default function () {
-    let value = useSelector(state => state.addblog)
-    let dispatch = useDispatch()
+const AddBlog = function (props) {
+    let { value, blogList } = useSelector(state => ({ value: state.addblog, blogList: state.bloglist}))
+    const dispatch = useDispatch()
+    
+
+    console.log(blogList, props)
+
 
     const handleChange = (value) => {
         dispatch({
@@ -13,14 +18,24 @@ export default function () {
     }
 
     const handleSave = (value) => {
-        console.log(value, '文件MARKDOWN上传');
+        console.log(value, props.location.state.id, '文件MARKDOWN上传');
 
-        dispatch({
-            type: 'MODAL_CHANGE',
-            isShow: true,
-            modalType: 'addBlog',
-            title: '保存博客到服务器'
-        })
+        if (props.location.state.id === 'new'){
+            dispatch({
+                type: 'MODAL_CHANGE',
+                isShow: true,
+                modalType: 'addBlog',
+                title: '添加博客'
+            })
+        }else{
+            dispatch({
+                type: 'MODAL_CHANGE',
+                isShow: true,
+                modalType: 'changeBlog',
+                title: '修改博客'
+            })
+        }
+        
     }
 
     return(
@@ -36,3 +51,5 @@ export default function () {
         
     )
 }
+
+export default withRouter(AddBlog)

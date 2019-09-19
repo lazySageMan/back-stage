@@ -1,29 +1,13 @@
 const defaultState = {
-    blog: [
-        {
-            title: 'Ant Design Title 1',
-        },
-        {
-            title: 'Ant Design Title 2',
-        },
-        {
-            title: 'Ant Design Title 3',
-        },
-        {
-            title: 'Ant Design Title 4',
-        },
-        {
-            title: 'Ant Design Title 5',
-        }, 
-        {
-            title: 'Ant Design Title 6',
-        },
-        
-    ]
+    blog: []
 };
 
 export default (state = defaultState, action) => {
     switch (action.type) {
+        case 'GET_BLOG':
+            return Object.assign({}, state, {
+                blog: action.blogList
+            })
         default:
             return state;
     }

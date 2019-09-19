@@ -1,11 +1,46 @@
-import React from 'react';
+import React, { useEffect } from 'react';
 import { withRouter } from "react-router-dom"
 import { Pagination, List } from 'antd';
-import { useSelector } from 'react-redux'
+import { useSelector, useDispatch } from 'react-redux'
 import ContentHeader from '../components/content-header'
+import HTTP from '../utils/HTTP'
+import { message } from 'antd'
+import LocalStotrage from '../utils/LocalStotrage'
 const BlogList = (props) => {
-    let bloglist = useSelector(state => state.bloglist)
-    console.log(bloglist)
+    const bloglist = useSelector(state => state.bloglist)
+    const dispatch = useDispatch()
+
+    useEffect(() => {
+        const token = LocalStotrage.getItem('token')
+        HTTP.GET('/admin/getBlog', '', token).then(res => {
+            console.log(res)
+            if(res.code === 200){
+                dispatch({
+                    type: 'GET_BLOG',
+                    blogList: res.data
+                })
+            } else if(res.code === 401){
+                LocalStotrage.delAll()
+                message.error('身份已过期，请重新登录')
+                props.history.replace('/login')
+            }
+        })
+    }, [dispatch, props.history])
+
+    const selectBlog = async (data) => {
+        await dispatch({
+            type: 'BLOG_CHANGE',
+            value: data.content,
+            blodTitle: data.title,
+            blogImg: data.img,
+            blogTag: data.tags.map(v => v.name).join(','),
+            blogCategory: data.categories.map(v => v.name).join(','),
+            blogId: data.id
+        })
+
+        props.history.push('/addblog', {id: data.id})
+    }
+
     return (
         <div className='content'>
             <div className='content-main'>
@@ -17,9 +52,9 @@ const BlogList = (props) => {
                         renderItem={item => (
                             <List.Item>
                                 <List.Item.Meta
-                                    onClick={() => props.history.push('/addblog')}
+                                    onClick={() => selectBlog(item)}
                                     title={<p>{item.title}</p>}
-                                    description="Ant Design, a design language for background applications, is refined by Ant UED Team"
+                                    description={<img alt='' style={{width: '100%', height: '100px'}} src={item.img} />}
                                 />
                             </List.Item>
                         )}

@@ -1,27 +1,25 @@
 import React, { useState, useEffect } from 'react'
+import { withRouter } from "react-router-dom"
 import { useSelector, useDispatch } from 'react-redux'
 import { Modal, Input, Icon, message } from 'antd'
 import HTTP from '../utils/HTTP'
 import LocalStotrage from '../utils/LocalStotrage'
 
-export default () => {
-    const modal = useSelector(state => state.modal)
+const Mmodal = (props) => {
+    const { modal, blodValue } = useSelector(state => ({ modal: state.modal, blodValue: state.addblog }))
+    const { isShow, modalType, title, id, userInfo } = modal
     const dispatch = useDispatch();
-
-    const {
-        isShow,
-        modalType,
-        title,
-        id,
-        userInfo
-    } = modal
 
     const [account, setAccount] = useState('');
     const [passwd, setPasswd] = useState('');
     const [email, setEmail] = useState('');
     const [permision, setPersion] = useState('');
 
-    console.log(userInfo, 'pppppp')
+    const [blodTitle, setBlodTitle] = useState('');
+    const [blogImg, setBlogImg] = useState('');
+    const [blogTag, setBlogTag] = useState('');
+    const [blogCategory, setBlogCategory] = useState('');
+
     const {
         Account = '',
         Passwd = '',
@@ -34,7 +32,12 @@ export default () => {
         setPasswd(Passwd);
         setEmail(Email)
         setPersion(Permission)
-    }, [Account, Email, Passwd, Permission, dispatch])
+
+        setBlodTitle(blodValue.title)
+        setBlogImg(blodValue.img)
+        setBlogTag(blodValue.tag)
+        setBlogCategory(blodValue.category)
+    }, [Account, Email, Passwd, Permission, blodValue.category, blodValue.img, blodValue.tag, blodValue.title, dispatch])
 
     const token = LocalStotrage.getItem('token');
 
@@ -119,8 +122,60 @@ export default () => {
                     message.error(res.message);
                 }
             })
-        }
+        } else if (modalType === 'addBlog'){
 
+            if (blodTitle === '' || blogImg === '' || blogTag === '' || blogCategory === ''){
+                message.error('参数不能为空');
+                return
+            }
+
+            const obj = {
+                title: blodTitle,
+                content: blodValue.value,
+                tags: blogTag,
+                categorys: blogCategory,
+                img: blogImg
+            }
+            HTTP.POST('/admin/addBlog', obj, token).then(res => {
+                console.log(res);
+                if(res.code === 200){
+                    message.success('博客上传成功 2秒后跳转');
+                    let timer = setTimeout(() => {
+                        clearTimeout(timer)
+                        props.history.replace('/')
+                    })
+                }else{
+                    message.error('博客上传失败');
+                }
+            })
+        } else if (modalType === 'changeBlog'){
+            if (blodTitle === '' || blogImg === '' || blogTag === '' || blogCategory === '') {
+                message.error('参数不能为空');
+                return
+            }
+
+            console.log(blodValue)
+            const obj = {
+                title: blodTitle,
+                content: blodValue.value,
+                tags: blogTag,
+                categorys: blogCategory,
+                img: blogImg,
+                id: blodValue.id
+            }
+            HTTP.POST('/admin/changeBlog', obj, token).then(res => {
+                console.log(res);
+                if (res.code === 200) {
+                    message.success('博客修改成功 2秒后跳转');
+                    let timer = setTimeout(() => {
+                        clearTimeout(timer)
+                        props.history.replace('/')
+                    })
+                } else {
+                    message.error('博客上传失败');
+                }
+            })
+        }
     }
 
     const handleClickCancel = () => {
@@ -176,24 +231,40 @@ export default () => {
                     你确定删除该用户吗？
                 </div>
             )
-        } else if(modalType === 'addBlog'){
+        } else if (modalType === 'addBlog' || modalType === 'changeBlog'){
             return (
                 <div>
                     <p className="flex-wrap">
                         <span style={{ flex: 1, textAlign: 'center' }}>名称：</span>
-                        <Input style={{ flex: 9 }} placeholder="博客名称" />
+                        <Input
+                            value={blodTitle}
+                            onChange={(e) => setBlodTitle(e.target.value)}
+                            style={{ flex: 9 }} 
+                            placeholder="博客名称" />
                     </p>
                     <p className="flex-wrap">
                         <span style={{ flex: 1, textAlign: 'center' }}>图片：</span>
-                        <Input style={{ flex: 9 }} placeholder="url地址" />
+                        <Input 
+                            value={blogImg}
+                            onChange={(e) => setBlogImg(e.target.value)}
+                            style={{ flex: 9 }} 
+                            placeholder="url地址" />
                     </p>
                     <p className="flex-wrap">
                         <span style={{ flex: 1, textAlign: 'center' }}>标签：</span>
-                        <Input style={{ flex: 9 }} placeholder="多个标签用,间隔" />
+                        <Input 
+                            value={blogTag}
+                            onChange={(e) => setBlogTag(e.target.value)}
+                            style={{ flex: 9 }} 
+                            placeholder="多个标签用,间隔" />
                     </p>
                     <p className="flex-wrap">
                         <span style={{ flex: 1, textAlign: 'center' }}>类别：</span>
-                        <Input style={{ flex: 9 }} placeholder="多个类别用,间隔" />
+                        <Input 
+                            value={blogCategory}
+                            onChange={(e) => setBlogCategory(e.target.value)}
+                            style={{ flex: 9 }} 
+                            placeholder="多个类别用,间隔" />
                     </p>
                 </div>
             )
@@ -214,3 +285,5 @@ export default () => {
         </div>
     )
 }
+
+export default withRouter(Mmodal)
