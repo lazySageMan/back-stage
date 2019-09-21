@@ -44,9 +44,7 @@ export default class HTTP {
 			}
 		}).then(res => {
 			return {
-				code: res.data.code,
-				data: res.data.data,
-				message: res.data.message
+				...res.data
 			}
 		}).catch(err => {
 			if (err.response.status === 401){
@@ -70,9 +68,7 @@ export default class HTTP {
 			}
 		}).then(res => {
 			return {
-				code: res.data.code,
-				data: res.data.data,
-				message: res.data.message
+				...res.data
 			}
 		}).catch(err => {
 			if (err.response.status === 401) {

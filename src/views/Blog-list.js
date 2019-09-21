@@ -13,7 +13,11 @@ const BlogList = (props) => {
 
     useEffect(() => {
         const token = LocalStotrage.getItem('token')
-        HTTP.GET('/admin/getBlog', '', token).then(res => {
+        const obj = {
+            offset: 1,
+            pageSize: 2
+        }
+        HTTP.GET('/admin/getBlog', obj, token).then(res => {
             console.log(res)
             if(res.code === 200){
                 let result = res.data;
@@ -21,9 +25,11 @@ const BlogList = (props) => {
                     let index = v.content.indexOf('<!--more-->')
                     v.description = translateMarkdown(v.content.slice(0, index))
                 })
+
                 dispatch({
                     type: 'GET_BLOG',
-                    blogList: result
+                    blogList: result,
+                    totalPage: res.pageTotal
                 })
             } else if(res.code === 401){
                 LocalStotrage.delAll()
@@ -47,11 +53,39 @@ const BlogList = (props) => {
         props.history.push('/addblog', {id: data.id})
     }
 
+    const pageChange = async(page, pageSize) => {
+
+        const token = LocalStotrage.getItem('token')
+        const obj = {
+            offset: page,
+            pageSize: 2
+        }
+        HTTP.GET('/admin/getBlog', obj, token).then(res => {
+            console.log(res)
+            if (res.code === 200) {
+                let result = res.data;
+                result.forEach(v => {
+                    let index = v.content.indexOf('<!--more-->')
+                    v.description = translateMarkdown(v.content.slice(0, index))
+                })
+                dispatch({
+                    type: 'GET_BLOG',
+                    blogList: result,
+                    totalPage: res.pageTotal
+                })
+            } else if (res.code === 401) {
+                LocalStotrage.delAll()
+                message.error('身份已过期，请重新登录')
+                props.history.replace('/login')
+            }
+        })
+    }
+    
     return (
         <div className='content'>
             <div 
                 className='content-main'
-                // style={{ maxHeight: `${document.body.clientHeight - (50 * 2 + 60) + 'px'}` }}
+                // style={{ maxHeight: `${document.body.clientHeight - (50 * 2 + 60) + 'px'}`, overflow: 'scroll'}}
                 >
                 <ContentHeader />
                 <div className='content-text'>
@@ -81,8 +115,10 @@ const BlogList = (props) => {
                         <Pagination 
                             pageSize={2}
                             defaultCurrent={1} 
-                            pageSizeOptions={2}
-                            total={bloglist.blog.length} />
+                            total={3}
+                            // total={20}
+                            onChange={(page, pageSize) => pageChange(page, pageSize)}
+                            />
                     </div>
                 </div>
             </div>
